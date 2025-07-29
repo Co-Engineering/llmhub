@@ -145,18 +145,19 @@ class GeminiClientAsync(BaseClientAsync):
             schema["propertyOrdering"] = list(schema["properties"].keys())
         response = await self.aio_client.models.generate_content(
             model=input_model.model,
-            contents=self.format_content(input_model.contents),
+            contents=self.format_content(input_model.messages),
             config=types.GenerateContentConfig(
-                system_instruction=input_model.system_prompt,
+                system_instruction=input_model.system,
                 response_mime_type="application/json"
                 if input_model.response_schema
                 else None,
                 response_schema=schema if input_model.response_schema else None,
             ),
         )
+
         parsed_response = BaseGenerationResponseModel(
             created_at=int(response.create_time or 0),
-            instructions=input_model.system_prompt,
+            instructions=input_model.system,
             model=response.model_version,
             object="response",
             output=[

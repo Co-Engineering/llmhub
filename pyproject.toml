@@ -1,6 +1,6 @@
 [project]
 name = "coec-llmhub"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -10,6 +10,9 @@ dependencies = [
 ]
 
 [dependency-groups]
+anthropic = [
+    "anthropic>=0.60.0",
+]
 gemini = [
     "google-genai>=1.27.0",
 ]

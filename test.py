@@ -9,7 +9,7 @@ with open("/home/svane/projects/birdie/birdie_jobs/test.pdf", "rb") as f:
     encoded = base64.b64encode(f.read()).decode("utf-8")
 
 
-client = LLMClientAsync(["gemini"])
+client = LLMClientAsync(["anthropic", "gemini"])
 contents = [
     {
         "role": "user",
@@ -36,8 +36,9 @@ class ResponseModel(BaseModel):
 
 generation_model = BaseGenerationModel(
     model="gemini-2.5-flash",
-    contents=contents,
-    system_prompt="You are a helpfull assistant",
-    response_schema=ResponseModel,
+    messages=contents,
+    system="You are a helpfull assistant",
+    # response_schema=ResponseModel,
+    max_tokens=1024,
 )
 print(asyncio.run(client.create_generation(generation_model, "gemini")))

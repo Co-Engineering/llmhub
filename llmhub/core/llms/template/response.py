@@ -5,8 +5,9 @@ from pydantic import BaseModel, Field
 
 class BaseGenerationModel(BaseModel):
     model: str = Field(..., description="The name of the model to use")
-    contents: Any = Field(...)
-    system_prompt: Optional[str] = Field("", description="")
+    messages: Any = Field(...)
+    system: Optional[str] = Field("", description="")
+    max_tokens: Optional[int] = Field(None)
     response_schema: Optional[Any] = Field(None)
 
 
