@@ -1,4 +1,3 @@
-import os
 from typing import Literal, Optional
 
 from anthropic import AsyncClient
@@ -9,6 +8,7 @@ from llmhub.core.llms.template.response import (
     BaseGenerationModel,
     BaseGenerationResponseModel,
 )
+from llmhub.core.secret_managers.base import BaseSecretManager
 
 
 class PDFDocumentPart(BaseModel):
@@ -55,8 +55,10 @@ class Part(BaseModel):
 
 
 class AnthropicClientAsync(BaseClientAsync):
-    def __init__(self):
-        self.client = AsyncClient(api_key=os.environ["ANTHROPIC_API_KEY"])
+    def __init__(self, secret_manager: BaseSecretManager):
+        self.client = AsyncClient(
+            api_key=secret_manager.get_secret("ANTHROPIC_API_KEY")
+        )
         self.PART_TYPE_CACTORY = {
             "text": Part.from_text,
             "input_file": Part.from_base64,

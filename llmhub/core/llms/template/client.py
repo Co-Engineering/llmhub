@@ -1,5 +1,8 @@
+from llmhub.core.secret_managers.base import BaseSecretManager
+
+
 class BaseClientAsync:
-    def __init__(self, warnings: bool = False):
+    def __init__(self, secret_manager: BaseSecretManager, warnings: bool = False):
         self.warnings = warnings
 
     async def create_response():

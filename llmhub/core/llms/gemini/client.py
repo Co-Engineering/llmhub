@@ -1,5 +1,4 @@
 import base64
-import os
 from typing import Any, Optional
 
 import magic
@@ -11,6 +10,7 @@ from llmhub.core.llms.template.response import (
     BaseGenerationModel,
     BaseGenerationResponseModel,
 )
+from llmhub.core.secret_managers.base import BaseSecretManager
 
 
 def get_mimetype(file_bytes: bytes) -> str:
@@ -119,8 +119,8 @@ class Part(BaseModel):
 
 
 class GeminiClientAsync(BaseClientAsync):
-    def __init__(self):
-        self.client = Client(api_key=os.environ["GEMINI_API_KEY"])
+    def __init__(self, secret_manager: BaseSecretManager):
+        self.client = Client(api_key=secret_manager.get_secret("GEMINI_API_KEY"))
         self.aio_client = self.client.aio
         self.PART_TYPE_CACTORY = {
             "text": Part.from_text,
