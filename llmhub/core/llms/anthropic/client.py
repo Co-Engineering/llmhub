@@ -1,6 +1,10 @@
 from typing import Literal, Optional
 
-from anthropic import AsyncClient
+try:
+    from anthropic import AsyncClient
+except ImportError:
+    pass
+
 from pydantic import BaseModel, Field
 
 from llmhub.core.llms.template import BaseClientAsync

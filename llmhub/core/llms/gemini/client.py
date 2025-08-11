@@ -1,8 +1,12 @@
 import base64
 from typing import Any, Optional
 
-import magic
-from google.genai import Client, types
+try:
+    import magic
+    from google.genai import Client, types
+except ImportError:
+    pass
+
 from pydantic import BaseModel, Field
 
 from llmhub.core.llms.template import BaseClientAsync
