@@ -137,6 +137,8 @@ class GeminiClientAsync(BaseClientAsync):
                 role=content["role"],
                 parts=[
                     self.PART_TYPE_CACTORY[part["type"]](**part)
+                    if not isinstance(part, str)
+                    else Part(text=part)
                     for part in content["content"]
                 ],
             )
